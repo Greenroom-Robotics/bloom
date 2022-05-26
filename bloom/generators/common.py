@@ -118,7 +118,7 @@ def resolve_more_for_os(rosdep_key, view, installer, os_name, os_version):
                                              os_installers,
                                              default_os_installer)
     assert inst_key in os_installers
-    return installer.resolve(rule), inst_key, default_os_installer
+    return installer.resolve({}, rule), inst_key, default_os_installer
 
 
 def package_conditional_context(ros_distro):
