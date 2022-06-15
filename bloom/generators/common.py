@@ -48,8 +48,6 @@ from bloom.util import code
 from bloom.util import maybe_continue
 from bloom.util import print_exc
 
-from catkin_pkg.package import Dependency
-
 try:
     from rosdep2 import create_default_installer_context
     from rosdep2.catkin_support import get_catkin_view
@@ -120,8 +118,7 @@ def resolve_more_for_os(rosdep_key, view, installer, os_name, os_version):
                                              os_installers,
                                              default_os_installer)
     assert inst_key in os_installers
-
-    return installer.resolve(Dependency(rosdep_key), rule), inst_key, default_os_installer
+    return installer.resolve({}, rule), inst_key, default_os_installer
 
 
 def package_conditional_context(ros_distro):
