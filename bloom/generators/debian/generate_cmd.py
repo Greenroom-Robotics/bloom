@@ -77,6 +77,8 @@ def prepare_arguments(parser):
     add('--ros-distro', help="ROS distro, e.g. %s (used for rosdep)" % get_non_eol_distros_prompt())
     add('-i', '--debian-inc', help="debian increment number", default='0')
     add('--native', action='store_true', help="generate native package")
+    add('--ignore-shlibs-missing-info', default=False, action="store_true",
+        help="Ignore missing library info detected by shlibs")
     return parser
 
 
