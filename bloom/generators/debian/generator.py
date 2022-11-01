@@ -316,7 +316,8 @@ def generate_substitutions_from_package(
     peer_packages=None,
     releaser_history=None,
     fallback_resolver=None,
-    native=False
+    native=False,
+    source_directory=None
 ):
     peer_packages = peer_packages or []
     data = {}
@@ -344,6 +345,8 @@ def generate_substitutions_from_package(
     data['Package'] = sanitize_package_name(package.name)
     # Installation prefix
     data['InstallationPrefix'] = installation_prefix
+    # Source directory
+    data['SourceDirectory'] = source_directory
     # Resolve dependencies
     evaluate_package_conditions(package, ros_distro)
     depends = [

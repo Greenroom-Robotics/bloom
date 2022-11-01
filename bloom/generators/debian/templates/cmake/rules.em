@@ -26,8 +26,13 @@ export DEB_HOST_MULTIARCH := $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
 
 DEB_HOST_GNU_TYPE ?= $(shell dpkg-architecture -qDEB_HOST_GNU_TYPE)
 
+@{
+dh_arguments = ''
+if SourceDirectory:
+    dh_arguments += f" -D{SourceDirectory}"
+}@
 %:
-	dh $@@ -v --buildsystem=cmake --builddirectory=.obj-$(DEB_HOST_GNU_TYPE)
+	dh $@@ -v --buildsystem=cmake --builddirectory=.obj-$(DEB_HOST_GNU_TYPE)@(dh_arguments)
 
 override_dh_auto_configure:
 	# In case we're installing to a non-standard location, look for a setup.sh
