@@ -317,7 +317,8 @@ def generate_substitutions_from_package(
     releaser_history=None,
     fallback_resolver=None,
     native=False,
-    source_directory=None
+    source_directory=None,
+    no_tests=False
 ):
     peer_packages = peer_packages or []
     data = {}
@@ -385,6 +386,8 @@ def generate_substitutions_from_package(
     data['Conflicts'] = sorted(
         set(format_depends(conflicts, resolved_deps))
     )
+
+    data['no_tests'] = no_tests
 
     # Build-type specific substitutions.
     build_type = package.get_build_type()

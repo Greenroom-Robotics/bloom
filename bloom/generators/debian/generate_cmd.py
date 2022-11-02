@@ -80,10 +80,12 @@ def prepare_arguments(parser):
     add('--ignore-shlibs-missing-info', default=False, action="store_true",
         help="Ignore missing library info detected by shlibs")
     add('--src-dir', help='Location of source directory in package')
+    add('--no-tests', default=False, action="store_true",
+        help="Don't run the test suite when building package")
     return parser
 
 
-def get_subs(pkg, os_name, os_version, ros_distro, deb_inc=0, native=False, source_directory=None):
+def get_subs(pkg, os_name, os_version, ros_distro, deb_inc=0, native=False, source_directory=None, no_tests=False):
     return generate_substitutions_from_package(
         pkg,
         os_name,
@@ -91,7 +93,8 @@ def get_subs(pkg, os_name, os_version, ros_distro, deb_inc=0, native=False, sour
         ros_distro,
         deb_inc=deb_inc,
         native=native,
-        source_directory=source_directory
+        source_directory=source_directory,
+        no_tests=no_tests
     )
 
 
@@ -129,7 +132,7 @@ def main(args=None, get_subs_fn=None):
     for path, pkg in pkgs_dict.items():
         template_files = None
         try:
-            subs = get_subs_fn(pkg, os_name, os_version, ros_distro, args.debian_inc, args.native, args.src_dir)
+            subs = get_subs_fn(pkg, os_name, os_version, ros_distro, args.debian_inc, args.native, args.src_dir, args.no_tests)
             if _place_template_files:
                 # Place template files
                 place_template_files(path, pkg.get_build_type())
