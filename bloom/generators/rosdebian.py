@@ -153,10 +153,8 @@ class RosDebianGenerator(DebianGenerator):
 def rosify_package_name(name, rosdistro):
     return 'ros-{0}-{1}'.format(rosdistro, name)
 
-parsed_args = None
 
-
-def get_subs(pkg, os_name, os_version, ros_distro, deb_inc, native, source_directory=None, no_tests=False):
+def get_subs(pkg, os_name, os_version, ros_distro, deb_inc, native, source_directory=None, no_tests=False, ignore_shlibs_missing_info=False):
     # No fallback_resolver provided because peer packages not considered.
     subs = generate_substitutions_from_package(
         pkg,
@@ -167,19 +165,15 @@ def get_subs(pkg, os_name, os_version, ros_distro, deb_inc, native, source_direc
         deb_inc=deb_inc,
         native=native,
         source_directory=source_directory,
-        no_tests=no_tests
+        no_tests=no_tests,
+        ignore_shlibs_missing_info=ignore_shlibs_missing_info
     )
     subs['Package'] = rosify_package_name(subs['Package'], ros_distro)
-
-    subs['ShlibsIgnoreMissingInfo'] = parsed_args.ignore_shlibs_missing_info
 
     return subs
 
 
 def main(args=None):
-    global parsed_args
-    # bloom is a mess - I think this is the only way to get the args here?
-    parsed_args = args
     debian_main(args, get_subs)
 
 

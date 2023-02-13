@@ -318,7 +318,8 @@ def generate_substitutions_from_package(
     fallback_resolver=None,
     native=False,
     source_directory=None,
-    no_tests=False
+    no_tests=False,
+    ignore_shlibs_missing_info=False
 ):
     peer_packages = peer_packages or []
     data = {}
@@ -345,6 +346,7 @@ def generate_substitutions_from_package(
     # Package name
     data['Package'] = sanitize_package_name(package.name)
     # Installation prefix
+    data['ShlibsIgnoreMissingInfo'] = ignore_shlibs_missing_info
     data['InstallationPrefix'] = installation_prefix
     # Source directory
     data['SourceDirectory'] = source_directory
